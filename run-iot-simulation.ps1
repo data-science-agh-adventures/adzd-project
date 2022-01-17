@@ -12,7 +12,8 @@ if ($null -eq $accountCheck)
     Write-Output "Creating a new account..."
     $location = "westeurope"
     az cosmosdb create --resource-group $resourceGroup --name $accountName `
-        --locations regionName=$location --output none
+        --locations regionName=$location `
+        --enable-free-tier true --output none
     Write-Output "Successfully added the account ${accountName}"
 }
 
