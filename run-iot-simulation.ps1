@@ -61,7 +61,10 @@ $_ = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
 foreach ($simProcess in $simulatorProcesses)
 {
     # Write-Output $simProcess
-    $_ = $simProcess.Kill()
+    if (!$simProcess.HasExited)
+    {
+        $_ = $simProcess.Kill()
+    }
 }
 # Write-Output "Account URI: ${accountUri}"
 # Write-Output "Account key: ${accountKey}"
