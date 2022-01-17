@@ -27,8 +27,10 @@ Parametry:
 
 ---
 
-> Mały hint (nie ma nic wspólnego z projektem). Żeby używać w w git powershell'a ssh konfig, który leży w WSL, to można zrobić tak:
+> Mały hint (nie ma nic wspólnego z projektem). Żeby używać w git powershell'a ssh konfig, który leży w WSL, to można zrobić tak:
 
 ```powershell
 $ git config --local core.sshCommand 'ssh -i \\\\wsl$\\Ubuntu-20.04\\home\\<user>\\.ssh\\<target_private_key> -F \\\\wsl$\\Ubuntu-20.04\\home\\<user>\\.ssh\\config -o IdentitiesOnly=yes'
 ```
+
+> potem można spokojnie już dawać `git push`, `git pull` itd.
