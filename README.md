@@ -15,7 +15,7 @@ $ az login
 Ogólny zapis skryptu:
 
 ```powershell
-$ powershell.exe -ExecutionPolicy Bypass -File .\run-iot-simulation.ps1 --dbName "<database_name>" --containerName "<container_name>" --resourceGroup "<resource_group>" --accountName "<account_name>" --nTestsToRun <integer>
+$ powershell.exe -ExecutionPolicy Bypass -File .\run-iot-simulation.ps1 --dbName "<database_name>" --containerName "<container_name>" --resourceGroup "<resource_group>" --accountName "<account_name>" --nTestsToRun <integer> --simulationDuration <integer>
 ```
 
 Parametry:
@@ -23,7 +23,8 @@ Parametry:
 - `containerName` - nazwa kontenera w danej bazie, też może nie istnieć;
 - `resourceGroup` - nazwa grupy zasobów Azure, na pewno musi istnieć i zalogowany użytkownik musi mieć do niej uprawnienia;
 - `accountName` - nazwa konta Cosmos DB, też może nie istnieć;
-- `nTestsToRun` - liczba instancji skryptu `cosmosdb_iot_simulator.py` jednocześnie uruchomionych.
+- `nTestsToRun` - liczba instancji skryptu `cosmosdb_iot_simulator.py` jednocześnie uruchomionych;
+- `simulationDuration` - czas trwania symulacji w minutach.
 
 ---
 

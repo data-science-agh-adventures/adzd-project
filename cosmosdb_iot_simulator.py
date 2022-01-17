@@ -7,6 +7,7 @@ from faker import Faker
 
 
 fake = Faker()
+WAIT_INTERVAL = 1  # seconds
 
 
 def prepare_iot_data_item(device_id):
@@ -26,6 +27,7 @@ def main(args):
     container_name = args.container_name
     url = args.account_uri
     key = args.account_key
+    simulation_minutes = args.duration
     simulator_id = args.program_id
     results_basedir = args.results_base_dir
     results_filename = f'{results_basedir}/iot-simulation-{simulator_id}-results.csv'
@@ -37,16 +39,15 @@ def main(args):
     container = database.get_container_client(container_name)
     device_id = fake.isbn13()
 
-    i = 0
-    while True:
+    n_iter = simulation_minutes * 60 // WAIT_INTERVAL
+    for i in range(n_iter):
         new_data_item = prepare_iot_data_item(device_id=device_id)
         start = time.time()
         container.upsert_item(new_data_item)
         end = time.time()
         results_file.write(f'{i},{end - start}\n')
-        results_file.flush()
         i += 1
-        time.sleep(10)
+        time.sleep(WAIT_INTERVAL)
     
     results_file.close()
 
@@ -59,6 +60,7 @@ if __name__ == '__main__':
     parser.add_argument('--db', dest='db_name', required=True, help='Name of the database')
     parser.add_argument('--cont', dest='container_name', required=True, help='Name of the container in the DB')
     parser.add_argument('--basedir', dest='results_base_dir', required=True, help='Base directory path for results file')
+    parser.add_argument('--duration', dest='duration', required=True, help='Simulation duration in minutes', type=int)
     args = parser.parse_args()
 
     main(args)

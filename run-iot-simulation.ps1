@@ -3,7 +3,8 @@ param(
     [string]$containerName,
     [string]$resourceGroup,
     [string]$accountName,
-    [Int]$nTestsToRun
+    [Int]$nTestsToRun,
+    [Int]$simulationDuration
 )
 
 $accountCheck = $(az cosmosdb show --resource-group $resourceGroup --name $accountName 2>$null)
@@ -50,11 +51,11 @@ $simulatorProcesses = 1..$nTestsToRun
 foreach ($i in 1..$nTestsToRun)
 {
     $simulatorProcesses[$i - 1] = $(Start-Process python -ArgumentList `
-        "cosmosdb_iot_simulator.py --id ${i} --uri ${accountUri} --basedir ${outputsPath} --key ${accountKey} --db ${dbName} --cont ${containerName}" `
+        "cosmosdb_iot_simulator.py --id ${i} --uri ${accountUri} --basedir ${outputsPath} --key ${accountKey} --db ${dbName} --cont ${containerName} --duration ${simulationDuration}" `
         -PassThru -NoNewWindow)
 }
 
-Write-Output "Press any key to stop simulation"
+Write-Output "Press any key to stop simulation or to continue after ${simulationDuration} minutes"
 $_ = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
 
 foreach ($simProcess in $simulatorProcesses)
